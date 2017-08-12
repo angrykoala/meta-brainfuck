@@ -4,17 +4,23 @@
 #include <string>
 using namespace std;
 
-
 brainfuck_interpreter::brainfuck_interpreter(string code) {
-    this->code=code;
-    this->code_position=0;
+    this->code = code;
+    this->code_position = 0;
     this->memory.push_back(brainfuck_interpreter::default_value);
-    this->memory_pointer=this->memory.begin();
+    this->memory_pointer = this->memory.begin();
 }
 brainfuck_interpreter::~brainfuck_interpreter() {}
 
+// PUBLIC
+void brainfuck_interpreter::execute_step() {
+    char command=this->get_current_command();
+    this->execute(command);
+    this->increment_step();
+}
+
 void brainfuck_interpreter::increment_pointer() {
-    if(this->memory_pointer==this->memory.end()) {
+    if(this->memory_pointer == this->memory.end()) {
         this->memory.push_back(brainfuck_interpreter::default_value);
     }
     this->memory_pointer++;
@@ -23,25 +29,23 @@ void brainfuck_interpreter::decrement_pointer() {
     this->memory_pointer--;
 }
 void brainfuck_interpreter::increment() {
-    char val=this->get_memory_value();
-    this->set_memory_value(val++);
+    char val = this->get_memory_value();
+    this->set_memory_value(val + 1);
 }
 void brainfuck_interpreter::decrement() {
-    char val=this->get_memory_value();
-    this->set_memory_value(val--);
+    char val = this->get_memory_value();
+    this->set_memory_value(val - 1);
 }
 void brainfuck_interpreter::output() {
-    cout<<this->get_memory_value();
+    cout << this->get_memory_value();
 }
 void brainfuck_interpreter::input() {
     char value;
     cin.get(value);
     this->set_memory_value(value);
 }
-void brainfuck_interpreter::goto_forward() {
-}
-void brainfuck_interpreter::goto_backward() {
-}
+void brainfuck_interpreter::goto_forward() {}
+void brainfuck_interpreter::goto_backward() {}
 
 // Private
 
@@ -50,5 +54,42 @@ char brainfuck_interpreter::get_memory_value() {
 }
 
 void brainfuck_interpreter::set_memory_value(char value) {
-    *(this->memory_pointer)=value;
+    *(this->memory_pointer) = value;
+}
+
+void brainfuck_interpreter::execute(char command) {
+    switch(command) {
+    case '+':
+        this->increment();
+        break;
+    case '-':
+        this->decrement();
+        break;
+    case '.':
+        this->output();
+        break;
+    case ',':
+        this->input();
+        break;
+    case '>':
+        this->increment_pointer();
+        break;
+    case '<':
+        this->decrement_pointer();
+        break;
+    case '[':
+        this->goto_forward();
+        break;
+    case ']':
+        this->goto_forward();
+        break;
+    }
+}
+
+void brainfuck_interpreter::increment_step() {
+    this->code_position++;
+}
+
+char brainfuck_interpreter::get_current_command() {
+    return this->code[this->code_position];
 }

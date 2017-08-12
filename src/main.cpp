@@ -4,8 +4,9 @@
 using namespace std;
 
 int main() {
-    brainfuck_interpreter interpreter("");
-    interpreter.increment();
-    interpreter.output();
-    cout << endl;
+    brainfuck_interpreter interpreter(",++.");
+    interpreter.execute_step();
+    interpreter.execute_step();
+    interpreter.execute_step();
+    interpreter.execute_step();
 }
