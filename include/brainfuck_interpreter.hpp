@@ -21,6 +21,7 @@ public:
     brainfuck_interpreter(string code);
     ~brainfuck_interpreter();
 
+    bool finished();
     void execute_step();
     void increment_pointer();
     void decrement_pointer();
@@ -30,12 +31,14 @@ public:
     void input();
     void goto_forward();
     void goto_backward();
+    void print_memory();
 
 private:
     char get_memory_value();
     void set_memory_value(char value);
     void execute(char commands);
     void increment_step();
+    void decrement_step();
     char get_current_command();
 
 };

@@ -13,14 +13,21 @@ brainfuck_interpreter::brainfuck_interpreter(string code) {
 brainfuck_interpreter::~brainfuck_interpreter() {}
 
 // PUBLIC
+
+bool brainfuck_interpreter::finished() {
+    return this->code_position >= this->code.size();
+}
+
 void brainfuck_interpreter::execute_step() {
-    char command=this->get_current_command();
+    char command = this->get_current_command();
     this->execute(command);
     this->increment_step();
 }
 
 void brainfuck_interpreter::increment_pointer() {
-    if(this->memory_pointer == this->memory.end()) {
+    auto iter=this->memory_pointer;
+    iter++;
+    if(iter == this->memory.end()) {
         this->memory.push_back(brainfuck_interpreter::default_value);
     }
     this->memory_pointer++;
@@ -44,8 +51,29 @@ void brainfuck_interpreter::input() {
     cin.get(value);
     this->set_memory_value(value);
 }
-void brainfuck_interpreter::goto_forward() {}
-void brainfuck_interpreter::goto_backward() {}
+void brainfuck_interpreter::goto_forward() {
+    char value = this->get_memory_value();
+    if(value == 0) {
+        while(this->get_current_command() != ']') {
+            this->increment_step();
+        }
+    }
+}
+void brainfuck_interpreter::goto_backward() {
+    char value = this->get_memory_value();
+    if(value != 0) {
+        while(this->get_current_command() != '[') {
+            this->decrement_step();
+        }
+    }
+}
+
+void brainfuck_interpreter::print_memory() {
+    for(auto it=this->memory.begin(); it != this->memory.end(); it++) {
+        cout<<(int)*it<<" ";
+    }
+}
+
 
 // Private
 
@@ -81,13 +109,17 @@ void brainfuck_interpreter::execute(char command) {
         this->goto_forward();
         break;
     case ']':
-        this->goto_forward();
+        this->goto_backward();
         break;
     }
 }
 
 void brainfuck_interpreter::increment_step() {
     this->code_position++;
+}
+
+void brainfuck_interpreter::decrement_step() {
+    this->code_position--;
 }
 
 char brainfuck_interpreter::get_current_command() {
