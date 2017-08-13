@@ -6,7 +6,7 @@ CPPFLAGS = -Wall -O1 -std=c++11 -g
 
 ASTYLE_FLAGS = --style=java --break-closing-brackets --align-pointer=name --delete-empty-lines --indent-col1-comments --unpad-paren -n -Q
 
-EXE = brainfuck
+EXE = meta_brainfuck
 
 BIN_DIR = bin
 INCLUDE_DIR = include
