@@ -4,14 +4,14 @@
 #include <string>
 using namespace std;
 
-brainfuck_interpreter::brainfuck_interpreter(string code) {
+brainfuck_interpreter::brainfuck_interpreter(const string &code) {
     this->code = code;
     this->code_position = 0;
     this->memory.push_back(brainfuck_interpreter::default_value);
     this->memory_pointer = this->memory.begin();
 }
 
-brainfuck_interpreter::brainfuck_interpreter(string code, unsigned int code_position, list<char> memory, list<char>::iterator memory_pointer) {
+brainfuck_interpreter::brainfuck_interpreter(const string &code, unsigned int code_position,const list<char> &memory,list<char>::iterator memory_pointer) {
     this->code=code;
     this->code_position=code_position;
     this->memory=memory;
@@ -22,7 +22,7 @@ brainfuck_interpreter::~brainfuck_interpreter() {}
 
 // PUBLIC
 
-bool brainfuck_interpreter::finished() {
+bool brainfuck_interpreter::finished() const {
     return this->code_position >= this->code.size();
 }
 
@@ -56,7 +56,7 @@ void brainfuck_interpreter::decrement() {
     char val = this->get_memory_value();
     this->set_memory_value(val - 1);
 }
-void brainfuck_interpreter::output() {
+void brainfuck_interpreter::output() const {
     cout << this->get_memory_value();
 }
 void brainfuck_interpreter::input() {
@@ -81,7 +81,7 @@ void brainfuck_interpreter::goto_backward() {
     }
 }
 
-void brainfuck_interpreter::print_memory() {
+void brainfuck_interpreter::print_memory()const {
     for(auto it=this->memory.begin(); it != this->memory.end(); it++) {
         cout<<(int)*it<<" ";
     }
@@ -90,7 +90,7 @@ void brainfuck_interpreter::print_memory() {
 
 // Private
 
-char brainfuck_interpreter::get_memory_value() {
+char brainfuck_interpreter::get_memory_value() const {
     return *(this->memory_pointer);
 }
 
@@ -135,6 +135,6 @@ void brainfuck_interpreter::decrement_step() {
     this->code_position--;
 }
 
-char brainfuck_interpreter::get_current_command() {
+char brainfuck_interpreter::get_current_command() const {
     return this->code[this->code_position];
 }
