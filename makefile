@@ -34,8 +34,6 @@ print-%  : ; @echo $* = $($*)
 $(BIN_DIR)/$(EXE): $(SRC) $(INC)
 	$(CXX) -o $@ $(SRC) $(CPPFLAGS) -I $(INCLUDE_DIR)
 
-# $(CXX) -o $@ $^ $(CPPFLAGS) -I $(INCLUDE_DIR)
-
 $(BIN_DIR)/:
 	mkdir $(BIN_DIR)
 

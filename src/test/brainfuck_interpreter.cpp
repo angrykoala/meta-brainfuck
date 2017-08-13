@@ -10,6 +10,14 @@ brainfuck_interpreter::brainfuck_interpreter(string code) {
     this->memory.push_back(brainfuck_interpreter::default_value);
     this->memory_pointer = this->memory.begin();
 }
+
+brainfuck_interpreter::brainfuck_interpreter(string code, unsigned int code_position, list<char> memory, list<char>::iterator memory_pointer) {
+    this->code=code;
+    this->code_position=code_position;
+    this->memory=memory;
+    this->memory_pointer=memory_pointer;
+}
+
 brainfuck_interpreter::~brainfuck_interpreter() {}
 
 // PUBLIC
@@ -18,6 +26,11 @@ bool brainfuck_interpreter::finished() {
     return this->code_position >= this->code.size();
 }
 
+void brainfuck_interpreter::execute() {
+    while(!this->finished()) {
+        this->execute_step();
+    }
+}
 void brainfuck_interpreter::execute_step() {
     char command = this->get_current_command();
     this->execute(command);

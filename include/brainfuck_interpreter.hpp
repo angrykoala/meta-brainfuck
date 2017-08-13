@@ -19,9 +19,11 @@ private:
 
 public:
     brainfuck_interpreter(string code);
+    brainfuck_interpreter(string code, unsigned int code_position, list<char> memory, list<char>::iterator memory_pointer);
     ~brainfuck_interpreter();
 
     bool finished();
+    void execute();
     void execute_step();
     void increment_pointer();
     void decrement_pointer();
