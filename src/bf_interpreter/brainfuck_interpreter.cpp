@@ -11,11 +11,14 @@ brainfuck_interpreter::brainfuck_interpreter(const string &code) {
     this->memory_pointer = this->memory.begin();
 }
 
-brainfuck_interpreter::brainfuck_interpreter(const string &code, unsigned int code_position,const list<char> &memory,list<char>::iterator memory_pointer) {
+brainfuck_interpreter::brainfuck_interpreter(const string &code, unsigned int code_position,const list<char> &memory,unsigned int memory_pointer) {
     this->code=code;
     this->code_position=code_position;
     this->memory=memory;
-    this->memory_pointer=memory_pointer;
+    this->memory_pointer = this->memory.begin();
+    for(unsigned int i=0;i<memory_pointer;i++){
+        this->increment_pointer();
+    }
 }
 
 brainfuck_interpreter::~brainfuck_interpreter() {}
@@ -82,9 +85,11 @@ void brainfuck_interpreter::goto_backward() {
 }
 
 void brainfuck_interpreter::print_memory()const {
+    cout<<"{ ";
     for(auto it=this->memory.begin(); it != this->memory.end(); it++) {
         cout<<(int)*it<<" ";
     }
+    cout<<"}"<<endl;
 }
 
 

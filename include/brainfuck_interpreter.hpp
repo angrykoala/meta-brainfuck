@@ -19,7 +19,7 @@ private:
 
 public:
     brainfuck_interpreter(const string &code);
-    brainfuck_interpreter(const string &code, unsigned int code_position,const list<char> &memory,list<char>::iterator memory_pointer);
+    brainfuck_interpreter(const string &code, unsigned int code_position,const list<char> &memory,unsigned int memory_pointer);
     ~brainfuck_interpreter();
 
     bool finished() const;

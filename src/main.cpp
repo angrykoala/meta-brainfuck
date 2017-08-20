@@ -1,18 +1,15 @@
 #include "brainfuck_interpreter.hpp"
 #include "bf_file_parser.hpp"
+#include "utils.hpp"
 #include <iostream>
+#include <regex>
+#include <string>
 
 using namespace std;
 
 int main() {
-    // brainfuck_interpreter interpreter(",>,>,..<..<..");
-    // while(!interpreter.finished()) {
-    //     interpreter.execute_step();
-    // }
-    // cout<<endl<<"[";
-    // interpreter.print_memory();
-    // cout<<"]";
-    bf_file_parser parser("ncp/test.bf");
+    bf_file_parser parser("ncp/test.mbf");
     brainfuck_interpreter interpreter=parser.load_file();
     interpreter.execute();
+    interpreter.print_memory();
 }

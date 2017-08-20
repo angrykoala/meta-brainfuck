@@ -4,7 +4,7 @@
 CXX = g++
 CPPFLAGS = -Wall -O1 -std=c++11 -g
 
-ASTYLE_FLAGS = --style=java --break-closing-brackets --align-pointer=name --delete-empty-lines --indent-col1-comments --unpad-paren -n -Q
+ASTYLE_FLAGS = --style=java --align-pointer=name --delete-empty-lines --indent-col1-comments --unpad-paren -n -Q
 
 EXE = meta_brainfuck
 
