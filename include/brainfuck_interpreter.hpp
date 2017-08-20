@@ -13,7 +13,7 @@ public:
 private:
     list<char>::iterator memory_pointer;
     list<char> memory;
-
+    unsigned int secondary_memory_pointer;
     string code;
     unsigned int code_position;
 
@@ -33,6 +33,12 @@ public:
     void input();
     void goto_forward();
     void goto_backward();
+    list<char> get_memory() const;
+    unsigned int get_code_positon() const;
+    string get_code() const;
+    unsigned int get_memory_pointer() const;
+
+
     void print_memory() const;
 
 private:

@@ -9,6 +9,7 @@ brainfuck_interpreter::brainfuck_interpreter(const string &code) {
     this->code_position = 0;
     this->memory.push_back(brainfuck_interpreter::default_value);
     this->memory_pointer = this->memory.begin();
+    this->secondary_memory_pointer=0;
 }
 
 brainfuck_interpreter::brainfuck_interpreter(const string &code, unsigned int code_position,const list<char> &memory,unsigned int memory_pointer) {
@@ -16,7 +17,8 @@ brainfuck_interpreter::brainfuck_interpreter(const string &code, unsigned int co
     this->code_position=code_position;
     this->memory=memory;
     this->memory_pointer = this->memory.begin();
-    for(unsigned int i=0;i<memory_pointer;i++){
+    this->secondary_memory_pointer=0;
+    for(unsigned int i=0; i<memory_pointer; i++) {
         this->increment_pointer();
     }
 }
@@ -47,26 +49,34 @@ void brainfuck_interpreter::increment_pointer() {
         this->memory.push_back(brainfuck_interpreter::default_value);
     }
     this->memory_pointer++;
+    this->secondary_memory_pointer++;
 }
+
 void brainfuck_interpreter::decrement_pointer() {
     this->memory_pointer--;
+    this->secondary_memory_pointer--;
 }
+
 void brainfuck_interpreter::increment() {
     char val = this->get_memory_value();
     this->set_memory_value(val + 1);
 }
+
 void brainfuck_interpreter::decrement() {
     char val = this->get_memory_value();
     this->set_memory_value(val - 1);
 }
+
 void brainfuck_interpreter::output() const {
     cout << this->get_memory_value();
 }
+
 void brainfuck_interpreter::input() {
     char value;
     cin.get(value);
     this->set_memory_value(value);
 }
+
 void brainfuck_interpreter::goto_forward() {
     char value = this->get_memory_value();
     if(value == 0) {
@@ -75,6 +85,7 @@ void brainfuck_interpreter::goto_forward() {
         }
     }
 }
+
 void brainfuck_interpreter::goto_backward() {
     char value = this->get_memory_value();
     if(value != 0) {
@@ -84,14 +95,29 @@ void brainfuck_interpreter::goto_backward() {
     }
 }
 
-void brainfuck_interpreter::print_memory()const {
+list<char> brainfuck_interpreter::get_memory() const {
+    return this->memory;
+}
+
+unsigned int brainfuck_interpreter::get_code_positon() const {
+    return this->code_position;
+}
+
+string brainfuck_interpreter::get_code() const {
+    return this->code;
+}
+
+unsigned int brainfuck_interpreter::get_memory_pointer() const {
+    return this->secondary_memory_pointer;
+}
+
+void brainfuck_interpreter::print_memory() const {
     cout<<"{ ";
     for(auto it=this->memory.begin(); it != this->memory.end(); it++) {
         cout<<(int)*it<<" ";
     }
     cout<<"}"<<endl;
 }
-
 
 // Private
 

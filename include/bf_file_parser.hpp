@@ -16,7 +16,8 @@ private:
 
 public:
     bf_file_parser(const string &filename);
-    brainfuck_interpreter load_file() const;
+    brainfuck_interpreter load() const;
+    void save(const brainfuck_interpreter &interpreter) const;
 
 private:
     string get_content() const;
