@@ -12,7 +12,7 @@ brainfuck_interpreter::brainfuck_interpreter(const string &code) {
     this->secondary_memory_pointer=0;
 }
 
-brainfuck_interpreter::brainfuck_interpreter(const string &code, unsigned int code_position,const list<char> &memory,unsigned int memory_pointer) {
+brainfuck_interpreter::brainfuck_interpreter(const string &code, unsigned int code_position,const list<unsigned char> &memory,unsigned int memory_pointer) {
     this->code=code;
     this->code_position=code_position;
     this->memory=memory;
@@ -37,9 +37,11 @@ void brainfuck_interpreter::execute() {
     }
 }
 void brainfuck_interpreter::execute_step() {
-    char command = this->get_current_command();
-    this->execute(command);
-    this->increment_step();
+    if(!this->finished()) {
+        char command = this->get_current_command();
+        this->execute(command);
+        this->increment_step();
+    }
 }
 
 void brainfuck_interpreter::increment_pointer() {
@@ -58,12 +60,13 @@ void brainfuck_interpreter::decrement_pointer() {
 }
 
 void brainfuck_interpreter::increment() {
-    char val = this->get_memory_value();
+    unsigned char val = this->get_memory_value();
+    cout<<(int) val<<endl;
     this->set_memory_value(val + 1);
 }
 
 void brainfuck_interpreter::decrement() {
-    char val = this->get_memory_value();
+    unsigned char val = this->get_memory_value();
     this->set_memory_value(val - 1);
 }
 
@@ -95,7 +98,7 @@ void brainfuck_interpreter::goto_backward() {
     }
 }
 
-list<char> brainfuck_interpreter::get_memory() const {
+list<unsigned char> brainfuck_interpreter::get_memory() const {
     return this->memory;
 }
 
@@ -125,7 +128,7 @@ char brainfuck_interpreter::get_memory_value() const {
     return *(this->memory_pointer);
 }
 
-void brainfuck_interpreter::set_memory_value(char value) {
+void brainfuck_interpreter::set_memory_value(unsigned char value) {
     *(this->memory_pointer) = value;
 }
 

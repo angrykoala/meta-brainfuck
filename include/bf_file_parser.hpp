@@ -22,7 +22,7 @@ public:
 private:
     string get_content() const;
     brainfuck_interpreter parse_content(const string &content) const;
-    list<char> parse_memory(const string &raw_memory) const;
+    list<unsigned char> parse_memory(const string &raw_memory) const;
 };
 
 # endif
